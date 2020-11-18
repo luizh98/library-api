@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.server.ResponseStatusException;
 
 public class ApiErros {
+
   private List<String> errors;
 
   public ApiErros(BindingResult bindingResult) {
@@ -18,6 +20,10 @@ public class ApiErros {
 
   public ApiErros(BusinessException ex) {
     this.errors = Arrays.asList(ex.getMessage());
+  }
+
+  public ApiErros(ResponseStatusException ex) {
+    this.errors = Arrays.asList(ex.getReason());
   }
 
   public List<String> getErrors() {
