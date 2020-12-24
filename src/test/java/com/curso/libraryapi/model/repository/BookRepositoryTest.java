@@ -3,6 +3,8 @@ package com.curso.libraryapi.model.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.curso.libraryapi.model.entity.Book;
+import com.curso.libraryapi.service.LoanService;
+
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,6 +25,9 @@ public class BookRepositoryTest {
 
   @Autowired
   TestEntityManager entityManager;
+
+  @MockBean
+  private LoanService loanService;
 
   @Autowired
   BookRepository repository;
@@ -58,7 +64,7 @@ public class BookRepositoryTest {
     assertThat(exists).isFalse();
   }
 
-  private Book createNewBook(String isbn) {
+  public static Book createNewBook(String isbn) {
     return Book
       .builder()
       .title("Aventuras")
